@@ -4,8 +4,20 @@ En el siguiente proyecto, se presenta el despliegue automático de infraestructu
  
  ![][1]
  
-Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la Imagen 2. Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes xx,xx. Por otro lado, en las Imágenes xx, se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
+Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes xx,xx. Por otro lado, en las Imágenes xx, se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
 
+### Imagen "Slave"
+
+![][8]
+![][9]
+
+### Job
+
+![][4]
+![][5]
+![][6]
+![][7]
+![][8]
 
 Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen xx y xx, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes xx,xx, se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos.
 
@@ -47,6 +59,7 @@ Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que im
 ```
 docker run -d -p 8080:8080 jenkins_YorQuiCos
 ```
+![][4]
 
 ### Configuración contenedor evarga
 
@@ -148,3 +161,10 @@ Add additional notes about how to deploy this on a live system
 [1]: images/Arquitectura.png
 [2]: images/TestConsola.png
 [3]: images/TestConsolaLines.png
+[4]: images/1.png
+[5]: images/11.png
+[6]: images/12.png
+[7]: images/13.png
+[8]: images/14.png
+[9]: images/8.png
+[10]: images/9.png
