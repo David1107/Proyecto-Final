@@ -3,28 +3,36 @@
 En el siguiente proyecto, se presenta el despliegue automático de infraestructura para dar soporte a procesos de integración continua. Para esto, se plantea como ejemplo la arquitectura que se puede observar en la Imagen 1. Para la implementación, se plantea un nodo maestro de Jenkins que se encargue del despliegue de Jobs (tareas ejecutables que son controladas o monitoreadas por Jenkins.) que para este caso, se va a encargar del despliegue del nodo “Slave”. Al hacer uso de una imagen evarga para su aprovisionamiento, esto se debe a que dicha imagen tiene los requerimientos básicos para ser un nodo “Slave” de Jenkins. A continuación, se describe el despliegue y la configuración del nodo maestro con Jenkins. Además, se ejecuta una prueba de cobertura con el plugin “pytest-cov” (Python, 2016) en el nodo “Slave” directamente y en el nodo maestro de Jenkins. Por último, se presentan los problemas encontrados con sus respectivas soluciones y las conclusiones del proyecto. 
  
  ![][1]
- 
-Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes xx,xx. Por otro lado, en las Imágenes xx, se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
+ Imagen 1
+Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes 2,3. Por otro lado, en las Imágenes 4,5,6,7,8 se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
 
 ### Imagen "Slave"
 
 ![][8]
+Imagen 2
 ![][9]
-
+Imagen 3
 ### Job
 
 ![][4]
+Imagen 4
 ![][5]
+Imagen 5
 ![][6]
+Imagen 6
 ![][7]
+Imagen 7
 ![][8]
+Imagen 8
 
-Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen xx y xx, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes xx,xx, se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos.
+Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen 9 y 10, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes 11 se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos obteniendo los mismos resultados.
 
 ![][2]
-
+Imagen 9
 ![][3]
-
+Imagen 10
+![][11]
+Imagen 11
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
 ## Preparativos de Docker
@@ -168,3 +176,4 @@ Add additional notes about how to deploy this on a live system
 [8]: images/14.png
 [9]: images/8.png
 [10]: images/9.png
+[11]: images/TestJenkins.png
