@@ -24,7 +24,14 @@ En esta sección, se realizará una descripción detallada de los procesos a seg
 Existe un contenedor que hará las veces de maestro en la arquitectura. En este punto, se definió un archivo Dockerfile, en el cual se configuran las dependencias y plugins necesarios para la correcta implementación del nodo maestro. Para realizar su despliegue, se necesitan las siguientes configuraciones:
 
 ```
-Dockerfile
+FROM jenkins
+#Install plugins
+RUN /usr/local/bin/install-plugins.sh docker:0.16.2
+RUN /usr/local/bin/install-plugins.sh saferestart:0.3
+RUN /usr/local/bin/install-plugins.sh git:3.0.1
+
+#setup no run setup wizard
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 ```
 
 ### Configuración contenedor evargas
