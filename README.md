@@ -15,6 +15,26 @@ Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace u
 
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
+## Despliegue
+
+En esta sección, se realizará una descripción detallada de los procesos a seguir para lograr el levantamiento del entorno de desarrollo especificado anteriormente.
+
+### Jenkins Master
+
+Existe un contenedor que hará las veces de maestro en la arquitectura. En este punto, se definió un archivo Dockerfile, en el cual se configuran las dependencias y plugins necesarios para la correcta implementación del nodo maestro. Para realizar su despliegue, se necesitan las siguientes configuraciones:
+
+```
+Dockerfile
+```
+
+### Configuración contenedor evargas
+
+### Creando un job
+
+### Evidencias
+
+### Problemas, situaciones y soluciones
+
 
 ## Getting Started
 
