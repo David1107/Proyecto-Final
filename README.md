@@ -47,6 +47,7 @@ Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que im
 ```
 docker run -d -p 8080:8080 jenkins_YorQuiCos
 ```
+![][4]
 
 ### Configuración contenedor evarga
 
@@ -148,3 +149,4 @@ Add additional notes about how to deploy this on a live system
 [1]: images/Arquitectura.png
 [2]: images/TestConsola.png
 [3]: images/TestConsolaLines.png
+[4]: images/1.png
