@@ -6,6 +6,13 @@ En el siguiente proyecto, se presenta el despliegue automático de infraestructu
  
 Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes xx,xx. Por otro lado, en las Imágenes xx, se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
 
+### Imagen "Slave"
+
+![][8]
+![][9]
+
+### Job
+
 ![][4]
 ![][5]
 ![][6]
@@ -159,3 +166,5 @@ Add additional notes about how to deploy this on a live system
 [6]: images/12.png
 [7]: images/13.png
 [8]: images/14.png
+[9]: images/8.png
+[10]: images/9.png
