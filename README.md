@@ -15,6 +15,8 @@ Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace u
 
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
+## Preparativos de Docker
+
 ## Despliegue
 
 En esta sección, se realizará una descripción detallada de los procesos a seguir para lograr el levantamiento del entorno de desarrollo especificado anteriormente.
@@ -34,7 +36,36 @@ RUN /usr/local/bin/install-plugins.sh git:3.0.1
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 ```
 
-### Configuración contenedor evargas
+Con este archivo de configuración, se procede a construir la imagen de Docker. Para esto, se usa el siguiente comando:
+
+```
+docker build -t jenkins_YorQuiCos .
+```
+
+Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que implemente el maestro Jenkins:
+
+```
+docker run -d -p 8080:8080 jenkins_YorQuiCos
+```
+
+### Configuración contenedor evarga
+
+Se hizo uso de una imagen evarga que contiene las dependencias precisas para implementar un nodo "esclavo" de Jenkins. Esto con el fin de poder generar los contenedores esclavos que permitan la ejecución de las pruebas del entorno. A continuación, se presenta el archivo Dockerfile con el que se implementa este nodo:
+
+```
+FROM evarga/jenkins-slave
+run apt-get update
+run apt-get install -y wget
+run apt-get install -y git
+run apt-get install -y python
+run wget https://bootstrap.pypa.io/get-pip.py
+run python get-pip.py
+USER root
+workdir /home/jenkins/workspace/test
+run chmod -R 777 /home/jenkins/workspace/test
+copy requeriments.txt /home/jenkins/workspace/test
+run pip install -r requeriments.txt
+```
 
 ### Creando un job
 
