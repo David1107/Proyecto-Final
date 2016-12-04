@@ -4,35 +4,57 @@ En el siguiente proyecto, se presenta el despliegue automático de infraestructu
  
  ![][1]
  Imagen 1
+ 
+ 
 Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes 2,3. Por otro lado, en las Imágenes 4,5,6,7,8 se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
 
 ### Imagen "Slave"
 
 ![][8]
 Imagen 2
+
+
 ![][9]
 Imagen 3
+
+
 ### Job
 
 ![][4]
 Imagen 4
+
+
 ![][5]
 Imagen 5
+
+
 ![][6]
 Imagen 6
+
+
 ![][7]
 Imagen 7
+
+
 ![][8]
 Imagen 8
+
+
 
 Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen 9 y 10, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes 11 se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos obteniendo los mismos resultados.
 
 ![][2]
 Imagen 9
+
+
 ![][3]
 Imagen 10
+
+
 ![][11]
 Imagen 11
+
+
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
 ## Preparativos de Docker
@@ -176,4 +198,4 @@ Add additional notes about how to deploy this on a live system
 [8]: images/14.png
 [9]: images/8.png
 [10]: images/9.png
-[11]: images/TestJenkins.png
+[11]: images/TestJenkins.jpg
