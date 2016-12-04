@@ -47,7 +47,12 @@ Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que im
 ```
 docker run -d -p 8080:8080 jenkins_YorQuiCos
 ```
+
+Con esto, ya se puede acceder al contenedor de Jenkins maestro desde el navegador, usando la dirección 192.168.1.4, para este caso particular.
 ![][4]
+
+Cabe mencionar que se deben revisar las dependencias y plugins instalados en el servidor, mediante el enlace Administrar Jenkins --> Administrar plugins.
+![][5]
 
 ### Configuración contenedor evarga
 
@@ -150,3 +155,4 @@ Add additional notes about how to deploy this on a live system
 [2]: images/TestConsola.png
 [3]: images/TestConsolaLines.png
 [4]: images/1.png
+[5]: images/10.png
