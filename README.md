@@ -90,6 +90,7 @@ Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que im
 docker run -d -p 8080:8080 jenkins_YorQuiCos
 ```
 ![][4]
+Imagen 12
 
 ### Configuración contenedor evarga
 
