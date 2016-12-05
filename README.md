@@ -7,31 +7,109 @@ El nodo esclavo se aprovisionara mediante una imagen propuesta por Ervin Varga, 
 A continuación, se describe el despliegue y la configuración del nodo maestro con Jenkins. Ademas, se ejecuta una prueba de cobertura con el plugin “pytest-cov” (Python, 2016) en el nodo “Slave” y se visualiza el resultado de la prueba mediante jenkins. Por último, se presentan los problemas encontrados con sus respectivas soluciones y las conclusiones del proyecto. 
  
  ![][1]
- Imagen 1: Infraestructura Jenkins maestro y esclavo
-
-
  
-Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que especifica la imagen de Jenkins a usar y los plugins necesarios, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins.
-
-El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes 2,3. Por otro lado, en las Imágenes 4,5,6,7,8 se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
-
-### Imagen "Slave"
-
-![][8]
-Imagen 2
+Imagen 1: Infraestructura Jenkins maestro y esclavo
 
 
-![][9]
-Imagen 3
+# Paso 1: Descripción y construcción de los contenedores a desplegar
+##1.1. Descripción:
+### Maestro de Jenkins:
 
+Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que especifica la imagen de Jenkins que se usara y los plugins necesarios, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins.
 
-### Job
+Dockerfile:
+```
+FROM jenkins
+#Install plugins
+RUN /usr/local/bin/install-plugins.sh docker:0.16.2
+RUN /usr/local/bin/install-plugins.sh saferestart:0.3
+RUN /usr/local/bin/install-plugins.sh git:3.0.1
+
+#setup no run setup wizard
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+```
+
+### Esclavo de Jenkins
+
+Se hizo uso de una imagen evarga que contiene las dependencias precisas para implementar un nodo "esclavo" de Jenkins. Esto con el fin de poder generar los contenedores esclavos que permitan la ejecución de las pruebas del entorno. A continuación, se presenta el archivo Dockerfile con el que se implementa este nodo:
+
+Dockerfile:
+```
+FROM evarga/jenkins-slave
+run apt-get update
+run apt-get install -y wget
+run apt-get install -y git
+run apt-get install -y python
+run wget https://bootstrap.pypa.io/get-pip.py
+run python get-pip.py
+USER root
+workdir /home/jenkins/workspace/test
+run chmod -R 777 /home/jenkins/workspace/test
+copy requeriments.txt /home/jenkins/workspace/test
+run pip install -r requeriments.txt
+```
+
+##1.2. Construcción:
+### Maestro de Jenkins:
+Luego de tener los archivos descargados se deben construir los contenedores virtuales. Para el maestro de jenkins, el primer paso es estar en la carpeta /jenkinsmaster, luego de esto se debe ejecutar el siguiente comando:
+
+```
+docker build -t jenkins_YorQuiCos .
+```
+Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que implemente el maestro de Jenkins:
+```
+docker run -d -p 8080:8080 jenkins_YorQuiCos
+```
+En el comando anterior se especifico que se ejecutara el contenedor en modo 'detached' y que se enlazaran los puertos 8080 del contenedor con el puerto 8080 de la maquina host.
+
+###Esclavo de Jenkins:
+Después, se debe construir la imagen que el contenedor maestro de jenkins usara para desplegar los contenedores. Para esto se debe estar en la carpeta jenkis_slave, luego de esto se debe ejecutar el siguiente comando:
+
+```
+docker build -t distrislave .
+```
+
+# Paso 2: Conexión con el maestro de Jenkins y configuración inicial:
+##2.1. Conexión:
+Para acceder a la pagina inicial Jenkins se hace mediante la ip de la maquina que corre el contenedor virtual, especificando que la conexión se hará por el puerto 8080. Es decir, mediante la url http://<ipcontenedor>:8080.
 
 ![][4]
-Imagen 4
+Imagen 2: Pagina inicial de jenkins
 
+##2.2. Configuración inicial:
+Despues de tener acceso a Jenkins, se debe configurar la nube y la plantilla de docker a usar en el despliegue de los esclavos. Se debe ingresar a:
+Administrar Jenkins -> Configurar el Sistema
 
 ![][5]
+Imagen 3: Pagina de configuración
+
+Despues, se debe buscar al final de la pagina la opción "Añadir una nueva nube" y se selecciona la opcion "Docker".
+
+![][6]
+Imagen 4: Opcion Añadir una nueva nube de docker.
+
+En los campos de la nube de docker, se debe especificar el nombre de la nube, la direccion url de docker*, credenciales de acceso los tiempos maximos para la conexion y lectura, la cantidad de contenedores en la nube y una plantilla de docker.
+
+![][7]
+Imagen 5: Configuracion de la nube de docker
+
+![][8]
+Imagen 6: Configuracion de las credenciales de Jenkins para los contenedores de la nube
+
+Despues se debe añadir una plantilla de docker, mediante la cual se podra especificar la imagen a usar para los contenedores a aprovisionar, una etiqueta de identificación, el modo de uso, las credenciales de acceso para los nuevos contenedores, entre otras cosas.
+
+![][11]
+Imagen 7: Configuración de la plantilla de docker
+
+# Paso 3: Creacion de un nuevo job/item en jenkins:
+Despues de haber configurado la nube de docker, se debe regresar a la pagina inicial y crear un nuevo item o job.
+
+![][4]
+Imagen 2: Pagina inicial de jenkins
+
+Cuando se crea un nuevo item, Jenkins solicita un nombre y un tipo de proyecto.
+
+![][14]
 Imagen 5
 
 
@@ -64,59 +142,6 @@ Imagen 11
 
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
-## Preparativos de Docker
-
-## Despliegue
-
-En esta sección, se realizará una descripción detallada de los procesos a seguir para lograr el levantamiento del entorno de desarrollo especificado anteriormente.
-
-### Jenkins Master
-
-Existe un contenedor que hará las veces de maestro en la arquitectura. En este punto, se definió un archivo Dockerfile, en el cual se configuran las dependencias y plugins necesarios para la correcta implementación del nodo maestro. Para realizar su despliegue, se necesitan las siguientes configuraciones:
-
-```
-FROM jenkins
-#Install plugins
-RUN /usr/local/bin/install-plugins.sh docker:0.16.2
-RUN /usr/local/bin/install-plugins.sh saferestart:0.3
-RUN /usr/local/bin/install-plugins.sh git:3.0.1
-
-#setup no run setup wizard
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
-```
-
-Con este archivo de configuración, se procede a construir la imagen de Docker. Para esto, se usa el siguiente comando:
-
-```
-docker build -t jenkins_YorQuiCos .
-```
-
-Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que implemente el maestro Jenkins:
-
-```
-docker run -d -p 8080:8080 jenkins_YorQuiCos
-```
-![][4]
-Imagen 12
-
-### Configuración contenedor evarga
-
-Se hizo uso de una imagen evarga que contiene las dependencias precisas para implementar un nodo "esclavo" de Jenkins. Esto con el fin de poder generar los contenedores esclavos que permitan la ejecución de las pruebas del entorno. A continuación, se presenta el archivo Dockerfile con el que se implementa este nodo:
-
-```
-FROM evarga/jenkins-slave
-run apt-get update
-run apt-get install -y wget
-run apt-get install -y git
-run apt-get install -y python
-run wget https://bootstrap.pypa.io/get-pip.py
-run python get-pip.py
-USER root
-workdir /home/jenkins/workspace/test
-run chmod -R 777 /home/jenkins/workspace/test
-copy requeriments.txt /home/jenkins/workspace/test
-run pip install -r requeriments.txt
-```
 
 ### Creando un job
 
