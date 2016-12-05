@@ -56,11 +56,6 @@ Luego de tener los archivos descargados se deben construir los contenedores virt
 ```
 docker build -t jenkins_YorQuiCos .
 ```
-Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que implemente el maestro de Jenkins:
-```
-docker run -d -p 8080:8080 jenkins_YorQuiCos
-```
-En el comando anterior se especifico que se ejecutara el contenedor en modo 'detached' y que se enlazaran los puertos 8080 del contenedor con el puerto 8080 de la maquina host.
 
 ###Esclavo de Jenkins:
 Después, se debe construir la imagen que el contenedor maestro de jenkins usara para desplegar los contenedores. Para esto se debe estar en la carpeta jenkis_slave, luego de esto se debe ejecutar el siguiente comando:
@@ -71,6 +66,12 @@ docker build -t distrislave .
 
 # Paso 2: Conexión con el maestro de Jenkins y configuración inicial:
 ##2.1. Conexión:
+Luego, a partir de la imagen construida, se ejecuta un contenedor virtual que implemente el maestro de Jenkins:
+```
+docker run -d -p 8080:8080 jenkins_YorQuiCos
+```
+El comando anterior especifica que el contenedor se ejecutara en modo 'detached' y que se enlazaran el puerto 8080 del contenedor con el puerto 8080 de la maquina host.
+
 Para acceder a la pagina inicial Jenkins se hace mediante la ip de la maquina que corre el contenedor virtual, especificando que la conexión se hará por el puerto 8080. Es decir, mediante la url http://<ipcontenedor>:8080.
 
 ![][4]
@@ -105,45 +106,61 @@ Imagen 7: Configuración de la plantilla de docker
 Despues de haber configurado la nube de docker, se debe regresar a la pagina inicial y crear un nuevo item o job.
 
 ![][4]
-Imagen 2: Pagina inicial de jenkins
+Imagen 8: Pagina inicial de jenkins
 
 Cuando se crea un nuevo item, Jenkins solicita un nombre y un tipo de proyecto.
 
 ![][14]
-Imagen 5
+Imagen 9: Creacion de un nuevo item
 
+Posteriormente, se deben especificar parametros como el nombre del proyecto, descripcion, expresion (label creado anteriormente), fuente del codigo (Git) y en caso de requerirlo hay una sección ejecutar, la cual permite detaller el estado de las tareas.
+![][25]
+Imagen 10: Especificacion del nuevo item
 
-![][6]
-Imagen 6
+![][15]
+Imagen 11: Especificacion del repositorio de github
 
+![][16]
+Imagen 12: Comando a ejecutar cuando el codigo haya sido clonado
 
-![][7]
-Imagen 7
+Despues de crear el job/item, se guarda las configuraciones y Jenkins regresa a la ventana desde la cual podemos compilar el proyecto. Para compilar el proyecto, se debe dar clic en Construir Ahora/Build now
 
+![][17]
+Imagen 13: Pagina del item/job
 
-![][8]
-Imagen 8
+Cuando la tarea es compilada, Jenkins hace uso del docker-plugin para aprovisionar y conectarse a los contenedores. Esto ultimo se puede visualizar en las siguientes imagenes, en la seccion "historia de tareas".
 
+![][19]
+Imagen 14: comando "docker ps" comprabando los contenedores aprovisionados
+
+![][20]
+Imagen 15: Pagina del item/job: el cual se esta conectando al contenedor virtual
+
+![][21]
+Imagen 16: Pagina del item/job: Console ouput
+
+![][23]
+Imagen 13: Pagina del item/job: Console ouput
+
+![][25]
+Imagen 14: Console Output: Prueba exitosa!!!
 
 
 Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen 9 y 10, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes 11 se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos obteniendo los mismos resultados.
 
 ![][2]
-Imagen 9
+Imagen 15
 
 
 ![][3]
-Imagen 10
+Imagen 16
 
 
 ![][11]
-Imagen 11
+Imagen 17
 
 
 Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
-
-
-### Creando un job
 
 ### Evidencias
 
@@ -151,18 +168,21 @@ En el siguiente video se pueden visualizar las pruebas descritas en el presente 
 
 * [JenkinsCI: Master and Slave using Docker Containers](https://youtu.be/OxrBCt1JLuQ)
 
-### Problemas, situaciones y soluciones
-
-
-
+### Referencias:
+* http://sourabhbajaj.com/mac-setup/Git/README.html
+* https://www.ivankrizsan.se/2016/05/18/enabling-docker-remote-api-on-ubuntu-16-04/
+* http://scriptcrunch.com/enable-docker-remote-api/
+* https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin
+* https://www.codeproject.com/articles/1056410/setup-configure-jenkins-for-your-team-in-automated
+* https://engineering.riotgames.com/news/jenkins-ephemeral-docker-tutorial
+* https://github.com/d4n13lbc/testproject
+* https://pypi.python.org/pypi/pytest-cov
 
 ## Autores
 
 * **David Quiñónez** - *12207002* 
 * **Yor Jaggy Castaño** - *12107010* 
 * **Mauricio Vásquez** - *12207002* 
-
-
 
 
 [1]: images/Arquitectura.png
