@@ -1,12 +1,19 @@
 # Proyecto Sistemas Distribuidos
 
-En el siguiente proyecto, se presenta el despliegue automático de infraestructura para dar soporte a procesos de integración continua. Para esto, se plantea como ejemplo la arquitectura que se puede observar en la Imagen 1. Para la implementación, se plantea un nodo maestro de Jenkins que se encargue del despliegue de Jobs (tareas ejecutables que son controladas o monitoreadas por Jenkins.) que para este caso, se va a encargar del despliegue del nodo “Slave”. Al hacer uso de una imagen evarga para su aprovisionamiento, esto se debe a que dicha imagen tiene los requerimientos básicos para ser un nodo “Slave” de Jenkins. A continuación, se describe el despliegue y la configuración del nodo maestro con Jenkins. Además, se ejecuta una prueba de cobertura con el plugin “pytest-cov” (Python, 2016) en el nodo “Slave” directamente y en el nodo maestro de Jenkins. Por último, se presentan los problemas encontrados con sus respectivas soluciones y las conclusiones del proyecto. 
+En el siguiente proyecto, se presenta el despliegue automático de una infraestructura para dar soporte a procesos de integración continua. Para esto, se plantea como ejemplo la arquitectura que se puede observar en la Imagen 1. Para la implementación, se plantea un nodo maestro de Jenkins que se encargue del despliegue de Jobs (tareas ejecutables que son controladas o monitoreadas por Jenkins.) que para este caso, se va a encargar del despliegue del nodo “Slave”. 
+
+El nodo esclavo se aprovisionara mediante una imagen propuesta por Ervin Varga, dicha imagen es "evarga/jenkins-slave" esto se debe a que dicha imagen tiene los requerimientos básicos para ser un nodo “Slave” de Jenkins.
+
+A continuación, se describe el despliegue y la configuración del nodo maestro con Jenkins. Ademas, se ejecuta una prueba de cobertura con el plugin “pytest-cov” (Python, 2016) en el nodo “Slave” y se visualiza el resultado de la prueba mediante jenkins. Por último, se presentan los problemas encontrados con sus respectivas soluciones y las conclusiones del proyecto. 
  
  ![][1]
- Imagen 1
+ Imagen 1: Infraestructura Jenkins maestro y esclavo
+
+
  
- 
-Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que contiene la imagen de Jenkins con los plugins necesarios para el uso de Jenkins, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins. El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes 2,3. Por otro lado, en las Imágenes 4,5,6,7,8 se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
+Inicialmente, para la implementación del nodo maestro, se crea el Dockerfile que especifica la imagen de Jenkins a usar y los plugins necesarios, además del comando “JAVA_OPTS="-Djenkins.install.runSetupWizard=false"”, que se encarga de evitar la configuración inicial del wizard de Jenkins.
+
+El contenido del archivo se puede observar en la carpeta "jenkinsmaster/". Después, en Jenkins se procede a realizar la configuración manual para la creación de la maquina evarga. Dicha implementación se puede observar detalladamente en las Imágenes 2,3. Por otro lado, en las Imágenes 4,5,6,7,8 se presenta el procedimiento para la creación de un job en Jenkins que se encargue del levantamiento del contenedor con la imagen evarga.
 
 ### Imagen "Slave"
 
@@ -115,22 +122,19 @@ run pip install -r requeriments.txt
 
 ### Evidencias
 
+En el siguiente video se pueden visualizar las pruebas descritas en el presente README.
+
+* [JenkinsCI: Master and Slave using Docker Containers](https://youtu.be/OxrBCt1JLuQ)
+
 ### Problemas, situaciones y soluciones
 
-
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 
 
 ## Autores
 
 * **David Quiñónez** - *12207002* 
-* **Yor Jaggy Castaño** - *11107005* 
+* **Yor Jaggy Castaño** - *12107010* 
 * **Mauricio Vásquez** - *12207002* 
 
 
@@ -139,11 +143,28 @@ run pip install -r requeriments.txt
 [1]: images/Arquitectura.png
 [2]: images/TestConsola.png
 [3]: images/TestConsolaLines.png
-[4]: images/1.png
-[5]: images/11.png
-[6]: images/12.png
-[7]: images/13.png
-[8]: images/14.png
-[9]: images/8.png
-[10]: images/9.png
-[11]: images/TestJenkins.jpg
+[4]: images/1.jpg
+[5]: images/2.jpg
+[6]: images/3.jpg
+[7]: images/4.jpg
+[8]: images/5.jpg
+[9]: images/6.jpg
+[10]: images/7.jpg
+[11]: images/8.jpg
+[12]: images/9.jpg
+[13]: images/10.jpg
+[14]: images/11.jpg
+[15]: images/12.jpg
+[16]: images/13.jpg
+[17]: images/14.jpg
+[18]: images/15.jpg
+[19]: images/16.jpg
+[20]: images/17.jpg
+[21]: images/18.jpg
+[22]: images/19.jpg
+[23]: images/20.jpg
+[24]: images/21.jpg
+[25]: images/22.jpg
+[26]: images/23.jpg
+[25]: images/11.5.jpg
+[14]: images/TestJenkins.jpg
