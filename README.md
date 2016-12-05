@@ -182,7 +182,7 @@ En el siguiente video de youtube se pueden visualizar las pruebas descritas en e
 
 * **David Quiñónez** - *12207002* 
 * **Yor Jaggy Castaño** - *12107010* 
-* **Mauricio Vásquez** - *12207002* 
+* **Mauricio Vásquez** - *11107005* 
 
 
 [1]: images/Arquitectura.png
