@@ -110,36 +110,36 @@ Imagen 8: Pagina inicial de jenkins
 
 Cuando se crea un nuevo item, Jenkins solicita un nombre y un tipo de proyecto.
 
-![][14]
+![][27]
 Imagen 9: Creacion de un nuevo item
 
 Posteriormente, se deben especificar parametros como el nombre del proyecto, descripcion, expresion (label creado anteriormente), fuente del codigo (Git) y en caso de requerirlo hay una sección ejecutar, la cual permite detaller el estado de las tareas.
-![][25]
+![][15]
 Imagen 10: Especificacion del nuevo item
 
-![][15]
+![][16]
 Imagen 11: Especificacion del repositorio de github
 
-![][16]
+![][17]
 Imagen 12: Comando a ejecutar cuando el codigo haya sido clonado
 
 Despues de crear el job/item, se guarda las configuraciones y Jenkins regresa a la ventana desde la cual podemos compilar el proyecto. Para compilar el proyecto, se debe dar clic en Construir Ahora/Build now
 
-![][17]
+![][19]
 Imagen 13: Pagina del item/job
 
 Cuando la tarea es compilada, Jenkins hace uso del docker-plugin para aprovisionar y conectarse a los contenedores. Esto ultimo se puede visualizar en las siguientes imagenes, en la seccion "historia de tareas".
 
-![][19]
+![][20]
 Imagen 14: comando "docker ps" comprabando los contenedores aprovisionados
 
-![][20]
+![][21]
 Imagen 15: Pagina del item/job: el cual se esta conectando al contenedor virtual
 
-![][21]
+![][23]
 Imagen 16: Pagina del item/job: Console ouput
 
-![][23]
+![][25]
 Imagen 13: Pagina del item/job: Console ouput
 
 ![][25]
@@ -156,7 +156,7 @@ Imagen 15
 Imagen 16
 
 
-![][11]
+![][14]
 Imagen 17
 
 
@@ -211,5 +211,5 @@ En el siguiente video se pueden visualizar las pruebas descritas en el presente 
 [24]: images/21.jpg
 [25]: images/22.jpg
 [26]: images/23.jpg
-[25]: images/11.5.jpg
+[27]: images/11.5.jpg
 [14]: images/TestJenkins.jpg
