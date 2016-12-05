@@ -110,43 +110,43 @@ Imagen 8: Pagina inicial de jenkins
 
 Cuando se crea un nuevo item, Jenkins solicita un nombre y un tipo de proyecto.
 
-![][27]
+![][14]
 Imagen 9: Creacion de un nuevo item
 
 Posteriormente, se deben especificar parametros como el nombre del proyecto, descripcion, expresion (label creado anteriormente), fuente del codigo (Git) y en caso de requerirlo hay una sección ejecutar, la cual permite detaller el estado de las tareas.
-![][15]
+![][27]
 Imagen 10: Especificacion del nuevo item
 
-![][16]
+![][15]
 Imagen 11: Especificacion del repositorio de github
 
-![][17]
+![][16]
 Imagen 12: Comando a ejecutar cuando el codigo haya sido clonado
 
 Despues de crear el job/item, se guarda las configuraciones y Jenkins regresa a la ventana desde la cual podemos compilar el proyecto. Para compilar el proyecto, se debe dar clic en Construir Ahora/Build now
 
-![][19]
+![][17]
 Imagen 13: Pagina del item/job
 
 Cuando la tarea es compilada, Jenkins hace uso del docker-plugin para aprovisionar y conectarse a los contenedores. Esto ultimo se puede visualizar en las siguientes imagenes, en la seccion "historia de tareas".
 
-![][20]
-Imagen 14: comando "docker ps" comprabando los contenedores aprovisionados
+![][19]
+Imagen 14: comando "docker ps" comprobando los contenedores aprovisionados
 
-![][21]
+![][20]
 Imagen 15: Pagina del item/job: el cual se esta conectando al contenedor virtual
 
-![][23]
+![][21]
 Imagen 16: Pagina del item/job: Console ouput
 
-![][25]
+![][23]
 Imagen 13: Pagina del item/job: Console ouput
 
 ![][25]
 Imagen 14: Console Output: Prueba exitosa!!!
 
 
-Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso del repositorio de git hub de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen 9 y 10, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes 11 se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos obteniendo los mismos resultados.
+Seguidamente, para las pruebas de cobertura anteriormente mencionadas, se hace uso el repositorio de github de Daniel Barragan (2016), Inicialmente, realizamos la prueba en el montaje del contenedor con la imagen de evarga. En la Imagen 15 y 16, se pueden observar los resultados de la prueba, el primero, es sin las lineas de perdida y el segundo con lineas de perdida, al momento de construirse el contenedor. Por otro lado, en las Imágenes 17 se puede observar el procedimiento de la ejecución de la misma prueba desde Jenkins con sus respectivos resultados. Es importante mencionar que, el contenedor virtual puede realizar cualquier tipo de prueba sobre la infraestructura desplegada. En este caso, pretendemos obtener una comparación de la ejecución de las pruebas en los dos entornos obteniendo los mismos resultados.
 
 ![][2]
 Imagen 15
@@ -160,11 +160,11 @@ Imagen 16
 Imagen 17
 
 
-Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que, Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
+Para concluir, Jenkins es una herramienta de integración útil y fácil de instalar, dado que permite integración distribuida por medio de los nodos, maestro y esclavo. Por otro lado, es importante mencionar que Jenkins cuenta con una gran diversidad de plugins que permiten diferentes funcionalidades en la herramienta, lo que aumenta la productividad de la misma. En este caso, solo hacemos uso de los plugins: git, docker plugin y restart plugin. Por último, se destaca la facilidad que la herramienta brinda para realizar pruebas sobre la infraestructura por medio de su interfaz gráfica. 
 
 ### Evidencias
 
-En el siguiente video se pueden visualizar las pruebas descritas en el presente README.
+En el siguiente video de youtube se pueden visualizar las pruebas descritas en el presente README.
 
 * [JenkinsCI: Master and Slave using Docker Containers](https://youtu.be/OxrBCt1JLuQ)
 
